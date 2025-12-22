@@ -6,20 +6,19 @@
 
 2. **工程健壮性：安全的模型保存策略 (Safe Checkpointing)**
    - **问题**：断点续训时会重置最佳 Loss 记录，导致优秀的旧模型被平庸的新模型覆盖。
-   - **改进**：启动训练时自动读取硬盘上现存的最佳 Loss 值，实施**“仅当更优时覆盖”**策略，彻底解决了断点续训的风险。
+   - **改进**：启动训练时自动读取硬盘上现存的最佳 Loss 值，实施**“仅当更优时覆盖”**策略，解决了断点续训的风险。
 
 3. **架构大升级：完整版 DDPM U-Net (SOTA Architecture)**
-   - **问题**：原 `SimpleUNet` 结构过于简陋（无 ResBlock，无 Attention，通道数少），性能天花板极低。
-   - **改进**：完全重写 `utils/unet.py`，复现了 **DDPM 原论文 (Ho et al.)** 的核心架构：
+   - **问题**：原 `SimpleUNet` 结构过于简陋（无 ResBlock，无 Attention，通道数少），性能上限比较低。
+   - **改进**：改进了 `utils/unet.py`，复现 **DDPM 原论文 (Ho et al.)** 的核心架构：
      - 引入 **ResNetBlock** (GroupNorm + SiLU + Dropout)。
      - 在低分辨率层加入 **Multi-Head Self-Attention**。
      - 修正了 Time Embedding 的注入逻辑。
-     - 解决了 Upsample 阶段的通道对齐 Bug。
 
 4. **训练策略优化 (Training Dynamics)**
-   - **优化器**：从 `Adam` 升级为 **`AdamW`**，提升泛化性。
+   - **优化器**：从 `Adam` 升级为 **`AdamW`**，增加L2正则提升泛化性。
    - **调度器**：引入 **`CosineAnnealingLR`** (余弦退火)，让 Loss 在训练后期能精细收敛。
-   - **稳定性**：加入 **Gradient Clipping (梯度裁剪)**，有效防止了由深层网络导致的梯度爆炸问题。
+   - **稳定性**：加入 **Gradient Clipping (梯度裁剪)**，缓解由深层网络导致的梯度爆炸问题。
 
 ---
 
@@ -35,3 +34,4 @@
     *   FID Score: **204.10** (在架构升级前优化所得)
     *   Inception Score: **2.99**
     *   *(注：完整版架构正在训练中，预计将获得显著更优的指标)*
+
