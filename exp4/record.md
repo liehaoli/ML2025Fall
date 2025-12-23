@@ -31,8 +31,8 @@
     *   Inception Score: **2.67**
 
 *   **改进模型 (Ours - Intermediate)**:
-    *   FID Score: **198.4589** (在架构升级前优化所得)
+    *   FID Score: **198.4589** 
     *   Inception Score: **3.1853 ± 0.9792**
-    *   *(注：完整版架构正在训练中，预计将获得显著更优的指标)*
+
 
 
