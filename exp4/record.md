@@ -27,12 +27,9 @@
 > **注意**：以下 FID 分数基于小样本 (Batch=64) 快速估算，数值偏高，主要用于横向对比趋势。
 
 *   **基准模型 (Baseline)**:
-    *   FID Score: **224.88**
-    *   Inception Score: **2.67**
+    *   FID Score: **224.8789**
+    *   Inception Score: **2.6666 ± 0.8039**
 
 *   **改进模型 (Ours - Intermediate)**:
     *   FID Score: **198.4589** 
     *   Inception Score: **3.1853 ± 0.9792**
-
-
-
